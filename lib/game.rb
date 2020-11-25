@@ -6,14 +6,23 @@ class Game
   end
 
   def input_and_count(number1, number2)
-    puts "\n Сделай умножение #{number1} * #{number2} ?"
     answer_computer = number1 * number2
-    answer_user = STDIN.gets.to_i
-    if answer_user == answer_computer
+    answer_user = Thread.new do
+      puts "\n Сделай умножение #{number1} * #{number2} ?"
+      Thread.current[:value] = STDIN.gets.to_i
+    end
+    Thread.new do
+      10.times{|i| STDOUT.write "\r#{i} --> "; sleep 1}
+      answer_user.kill
+    end
+    answer_user.join
+    if answer_user[:value] == answer_computer
       puts 'Верно!'
       @answers_right += 1
+    elsif puts "Неверно, правильный ответ #{answer_computer}"
+      @answers_wrong += 1
     else
-      puts "Неверно, правильный ответ #{answer_computer}"
+      puts 'Время вышло!'
       @answers_wrong += 1
     end
   end
