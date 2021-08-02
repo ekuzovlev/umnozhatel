@@ -1,70 +1,41 @@
-let money = 50000;
+'use strict';
 
-let income = 'фриланс';
+// Программа "Умножатель" - v.1.0
+// Помогает проверять таблицу умножения.
+// Первый вариант — тестирование по столбикам, в разнобой.
 
-let addExpenses = 'Интернет, такси, коммуналка';
+let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-let deposit = true;
+const column = +prompt('Столбик на какую цифру будем проверять?');
 
-let mission = 1000000;
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 
-let period = 6;
+shuffleArray(numbers);
 
-console.log(typeof(money));
-console.log(typeof(income));
-console.log(typeof(deposit));
+console.log(numbers);
 
-console.log(addExpenses.length);
+let score = 0;
 
-console.log(`Период равен ${period} месяцев`);
-console.log(`Цель заработать ${mission} рублей`);
+for (let i = 0; i < 11; i++) {
+  let multiplier = numbers[i];
 
-addExpenses = addExpenses.toLowerCase().split(', ');
-console.log(addExpenses);
+  let rightAnswer = column * multiplier;
 
-let budgetDay = money / 30;
-console.log(budgetDay);
+  let userAnswer = +prompt(`Сколько будет ${column} * ${multiplier}?`);
 
-// 2) Спрашиваем у пользователя “Ваш месячный доход?” и результат сохраняем в переменную money
-money = Number(prompt('Ваш месячный доход?'));
+  let message =
+    userAnswer === rightAnswer ? 'Правильно' : `Неправильно, верный ответ ${rightAnswer}`;
 
-// 3) Спросить у пользователя “Перечислите возможные расходы за рассчитываемый период через запятую” сохранить в переменную addExpenses (пример: "Квартплата, проездной, кредит")
-addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
+  if (userAnswer === rightAnswer) {
+    score ++;
+  }
 
-// 4) Спросить у пользователя “Есть ли у вас депозит в банке?” и сохранить данные в переменной deposit (булево значение true/false)
-deposit = confirm('Есть ли у вас депозит в банке?');
+  alert(message);
+}
 
-// 5) Спросить у пользователя по 2 раза каждый вопрос и записать ответы в разные переменные
-// “Введите обязательную статью расходов?” (например expenses1, expenses2)
-// “Во сколько это обойдется?” (например amount1, amount2)
-// в итоге 4 вопроса и 4 разные переменных
-let expenses1 = prompt('Введите обязательную статью расходов?');
-let amount1 = Number(prompt('Во сколько это обойдется?'));
-
-let expenses2 = prompt('Введите обязательную статью расходов?');
-let amount2 = Number(prompt('Во сколько это обойдется?'));
-
-// 6) Вычислить бюджет на месяц, учитывая обязательные расходы, сохранить в новую переменную budgetMonth и вывести результат в консоль
-let budgetMonth = money - amount1 - amount2;
-console.log('Бюджет на месяц:', budgetMonth);
-
-// 7) Зная budgetMonth, посчитать за сколько месяцев будет достигнута цель mission, вывести в консоль, округляя в большую сторону (методы объекта Math в помощь)
-let targetMission = Math.ceil(mission / budgetMonth);
-console.log(`Цель будет достигнута за ${targetMission} месяцев(-а)`);
-
-// 8) Поправить budgetDay учитывая бюджет на месяц, а не месячный доход. Вывести в консоль  округлив в меньшую сторону
-budgetDay = Math.floor(budgetMonth / 30);
-console.log('Бюджет на день:', budgetDay);
-
-// 9) Написать конструкцию условий (расчеты приведены в рублях)
-// Если budgetDay больше 1200, то “У вас высокий уровень дохода”
-// Если budgetDay больше 600 и меньше 1200, то сообщение “У вас средний уровень дохода”
-// Если budgetDay меньше 600 и больше 0 то в консоль вывести сообщение “К сожалению у вас уровень дохода ниже среднего”
-// Если отрицательное значение то вывести “Что то пошло не так”
-// Учесть варианты 0, 600 и 1200 (к какому уровню не важно)
-let message  =
-  (budgetDay >= 1200) ? 'У вас высокий уровень дохода' :
-  (budgetDay >= 600 && budgetDay < 1200) ? 'У вас cредний уровень дохода' :
-  (budgetDay >= 0 && budgetDay < 600) ? 'К сожалению у вас уровень дохода ниже среднего' : 'Что-то пошло не так';
-
-console.log(message);
+alert(`Ты дал правильных ответов на вопросы: ${score}`);
