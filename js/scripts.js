@@ -27,7 +27,7 @@ for (let i = 0; i < 11; i++) {
   let userAnswer = +prompt(`Сколько будет ${column} * ${multiplier}?`);
 
   let message =
-    userAnswer === rightAnswer ? 'Правильно' : `Неправильно, верный ответ ${rightAnswer}`;
+    userAnswer === rightAnswer ? '👍 Правильно' : `👎 Неправильно, верный ответ ${rightAnswer}`;
 
   if (userAnswer === rightAnswer) {
     score ++;
