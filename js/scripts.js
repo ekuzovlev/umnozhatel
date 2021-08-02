@@ -17,8 +17,6 @@ function shuffleArray(array) {
 
 shuffleArray(numbers);
 
-console.log(numbers);
-
 let score = 0;
 
 for (let i = 0; i < 11; i++) {
